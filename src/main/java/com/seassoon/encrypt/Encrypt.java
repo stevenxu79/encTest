@@ -29,7 +29,7 @@ public class Encrypt {
 	native byte[] decrypt(byte[] _buf, byte[] key, byte[] keyorg);
 	static {
 		System.out.println(System.getProperty("java.library.path"));
-		System.loadLibrary("libSuicaoEncJarLib");
+		System.loadLibrary("libEncJarLib");
 	}
 	// static byte[] encrypt(byte[] _buf) {
 	// byte[] b = new byte[_buf.length];
@@ -395,11 +395,12 @@ public class Encrypt {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String readFileName = "rpl/classes/" + "SimpleMetadataReader.class";
-		System.out.println("readFile=" + readFileName);
-		File readFile = new File(readFileName);
-		byte[] bytes_tmp = getFileBytes(readFile);
+//		String readFileName = "rpl/classes/" + "SimpleMetadataReader.class";
+//		System.out.println("readFile=" + readFileName);
+//		File readFile = new File(readFileName);
+//		byte[] bytes_tmp = getFileBytes(readFile);
 		
+		byte[] bytes_tmp="thank you very much!".getBytes(charset);
 		System.out.println("bytes_tmp byte:"+Arrays.toString(bytes_tmp));
 		
 		Encrypt coder = new Encrypt();
@@ -416,7 +417,7 @@ public class Encrypt {
 		//3.解密数据
 		byte[] debytes = coder.decrypt(enbytes, enckey, enckeyOrg.getBytes(charset));// 加密CLASS
 		System.out.println("debytes byte:"+Arrays.toString(debytes));
-//		System.out.println("debytes str="+new String(debytes));
+		System.out.println("debytes str="+new String(debytes));
 		
 		
 //		 Map<String, String> map = getArgMap(args);
