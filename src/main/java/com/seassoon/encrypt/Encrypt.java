@@ -30,17 +30,19 @@ public class Encrypt {
 	static {
 		System.out.println(System.getProperty("java.library.path"));
 		System.loadLibrary("libEncJarLib");
+		System.loadLibrary("libDecJarLib");
 	}
-	// static byte[] encrypt(byte[] _buf) {
-	// byte[] b = new byte[_buf.length];
-	// for (int i = 0; i < _buf.length; i++) {
-	//// b[i] = (byte) (_buf[i] ^ 0x07);
-	//// b[i] = (byte) (_buf[i] + 'k');
-	// b[i] = (byte)( (_buf[i] + 'K')^ 0x0B);
-	// }
-	//
-	// return b;
-	// }
+	
+	static byte[] decrypt2(byte[] _buf, byte[] key, byte[] keyorg) {
+		byte[] b = new byte[_buf.length];
+		for (int i = 0; i < _buf.length; i++) {
+//			b[i] = (byte) (_buf[i] ^ 0x07);
+//			b[i] = (byte) (_buf[i] - 'k');
+			b[i] = (byte) ((_buf[i] ^ 0x0B) -'K');
+		}
+
+		return b;
+	}
 
 	private static final String key0 = "FECOI()*&<MNCXZPKL";
 	private static final Charset charset = Charset.forName("UTF-8");
@@ -409,13 +411,19 @@ public class Encrypt {
 		//1.获得密钥
 		String enckeyOrg="suichaojar";
 		byte[] enckey = coder.genEncKey(enckeyOrg.getBytes(charset));
-		System.out.println("enckey2 byte:"+Arrays.toString(enckey));
+		System.out.println("enckey byte:len="+enckey.length+",content="+Arrays.toString(enckey));
+		System.out.println("enckey str:"+new String(enckey)); 
 		//2.加密数据
 		byte[] enbytes = coder.encrypt(bytes_tmp, enckey, enckeyOrg.getBytes(charset));// 加密CLASS
-		System.out.println("enbytes byte:"+Arrays.toString(enbytes));		
+		System.out.println("enbytes byte:"+Arrays.toString(enbytes));	
 		
+		
+		System.out.println("enckeyOrg Str:"+enckeyOrg);	
+		byte[] enckey2= {33, -49, -77, 49, 106, -5, -99, 0, -5, -72};
+		System.out.println("enckey2 byte:len="+enckey2.length+",content="+Arrays.toString(enckey2));
+		System.out.println("enckey22 str:"+new String(enckey2)); 
 		//3.解密数据
-		byte[] debytes = coder.decrypt(enbytes, enckey, enckeyOrg.getBytes(charset));// 加密CLASS
+		byte[] debytes = coder.decrypt(enbytes, enckey2, enckeyOrg.getBytes(charset));// 加密CLASS
 		System.out.println("debytes byte:"+Arrays.toString(debytes));
 		System.out.println("debytes str="+new String(debytes));
 		
